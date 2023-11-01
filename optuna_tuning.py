@@ -1,5 +1,6 @@
 # imports
 import optuna
+import joblib
 from keras.datasets import mnist
 from keras.utils import to_categorical
 from keras.models import Sequential
@@ -75,5 +76,15 @@ def objective(trial):
 
 X_train, Y_train, X_test, Y_test = load_data()
 study = optuna.create_study(direction='maximize')
-study.optimize(objective, n_trials=4, n_jobs=4, show_progress_bar=True)
+study.optimize(objective, n_trials=100, n_jobs=4, show_progress_bar=True)
 print(study.best_params)
+
+
+
+
+
+
+
+
+joblib.dump(study, "study.pkl")
+study = joblib.load("study.pkl")
